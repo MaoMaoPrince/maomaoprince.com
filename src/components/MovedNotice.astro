@@ -11,6 +11,7 @@ const { questPage = false } = Astro.props;
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="license" href="/ReadyP9-LICENSE.txt" title="Ready P9 by Scott Lawrence, CC BY-SA 3.0" />
     <meta name="description" content="Black Desert Fishing has moved to FishyStuff. Visit our new home for fishing guides and resources." />
     <title>{questPage ? 'Triple Float Fishing Rod quest has moved' : 'Black Desert Fishing has moved'}</title>
   </head>
@@ -41,6 +42,8 @@ const { questPage = false } = Astro.props;
       </aside>
     </main>
     <footer aria-label="FishyStuff and MaoMaoPrince">
+      <canvas class="pixel-water" aria-hidden="true"></canvas>
+      <div class="brandmarks">
       <a class="brand fishystuff" href="https://fishystuff.fish/">
         <span>FishyStuff</span>
         <img src="/fishystuff-logo.png" alt="" width="56" height="56" />
@@ -49,12 +52,75 @@ const { questPage = false } = Astro.props;
         <img src="/maomaoprince-logo.svg" alt="" width="56" height="56" />
         <span>MaoMaoPrince</span>
       </a>
+      </div>
     </footer>
   </body>
 </html>
 
+<script>
+  const canvas = document.querySelector<HTMLCanvasElement>('.pixel-water');
+  const context = canvas?.getContext('2d');
+  if (canvas && context) {
+    const waterCanvas = canvas;
+    const waterContext = context;
+    const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+    let frame = 0;
+    let lastPaint = -Infinity;
+
+    function paint(time: number) {
+      const width = waterCanvas.width;
+      const height = waterCanvas.height;
+      const seconds = time / 1000;
+      waterContext.clearRect(0, 0, width, height);
+      for (let x = 0; x < width; x++) {
+        const surface = Math.round(4 + Math.sin(x * 0.12 - seconds * 0.9) * 1.3 + Math.sin(x * 0.055 + seconds * 0.6));
+        waterContext.fillStyle = '#163b54';
+        waterContext.fillRect(x, surface, 1, height - surface);
+        waterContext.fillStyle = '#285d7c';
+        waterContext.fillRect(x, surface, 1, 2);
+        waterContext.fillStyle = '#65c4ef';
+        waterContext.fillRect(x, surface, 1, 1);
+        if ((x + Math.floor(seconds * 2)) % 37 < 5) {
+          waterContext.fillStyle = '#3c799b';
+          waterContext.fillRect(x, surface + 5, 1, 1);
+        }
+        if ((x - Math.floor(seconds)) % 53 < 7) {
+          waterContext.fillStyle = '#28536e';
+          waterContext.fillRect(x, Math.round(height * 0.8 + Math.sin(x * 0.05 + seconds)), 1, 1);
+        }
+      }
+    }
+
+    function animate(time: number) {
+      if (time - lastPaint >= 100) {
+        paint(time);
+        lastPaint = time;
+      }
+      frame = requestAnimationFrame(animate);
+    }
+
+    function resize() {
+      waterCanvas.width = Math.max(1, Math.ceil(waterCanvas.clientWidth / 4));
+      waterCanvas.height = Math.max(1, Math.ceil(waterCanvas.clientHeight / 4));
+      paint(0);
+    }
+
+    function updateMotion() {
+      cancelAnimationFrame(frame);
+      if (reducedMotion.matches) paint(0);
+      else frame = requestAnimationFrame(animate);
+    }
+
+    new ResizeObserver(resize).observe(waterCanvas);
+    reducedMotion.addEventListener('change', updateMotion);
+    resize();
+    updateMotion();
+  }
+</script>
+
 <style is:global>
   @font-face { font-family: Pacifico; src: url('/Pacifico-Regular.woff2') format('woff2'); font-weight: 400; font-style: normal; font-display: swap; }
+  @font-face { font-family: 'Ready P9'; src: url('/ReadyP9.woff2') format('woff2'); font-weight: 400; font-style: normal; font-display: swap; }
   :root {
     color-scheme: dark;
     font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
@@ -70,9 +136,9 @@ const { questPage = false } = Astro.props;
     grid-template-rows: 1fr auto;
     justify-items: center;
     gap: 3rem;
-    padding: 2rem 1.25rem;
+    padding: 2rem 0 0;
   }
-  main { width: 100%; max-width: 46rem; margin: auto 0; text-align: center; }
+  main { width: calc(100% - 2.5rem); max-width: 46rem; margin: auto 0; text-align: center; }
   img { display: block; object-fit: contain; }
   .hero-mascot { margin: 0 auto 1.75rem; }
   .site-name { margin: 0 0 0.75rem; color: #b8b8b8; font-size: 0.9375rem; letter-spacing: 0.04em; }
@@ -92,18 +158,21 @@ const { questPage = false } = Astro.props;
   .community.compact { max-width: 34rem; margin: 1.75rem auto 0; padding: 0.625rem 0.875rem; grid-template-columns: 32px minmax(0, 1fr); align-items: center; gap: 0.625rem; border-radius: 0.75rem; }
   .community.compact img { width: 32px; height: 32px; }
   .community.compact p { font-size: 0.875rem; line-height: 1.5; }
-  footer { display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: 2rem; }
+  footer { position: relative; isolation: isolate; width: 100%; min-height: 8.5rem; padding: 2.25rem 1.25rem 1.5rem; display: grid; place-items: center; }
+  .pixel-water { position: absolute; inset: 0; width: 100%; height: 100%; z-index: -1; pointer-events: none; image-rendering: pixelated; }
+  .brandmarks { display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: 2rem; }
   .brand { display: inline-flex; align-items: center; gap: 0.75rem; color: #f3f3f3; text-decoration: none; }
-  .fishystuff { font-family: Pacifico, cursive; font-size: 1.625rem; }
-  .maomaoprince { font-size: 1rem; }
+  .fishystuff { font-family: Pacifico, cursive; font-size: 1.25rem; }
+  .fishystuff img { width: 44px; height: 44px; }
+  .maomaoprince { font-family: 'Ready P9', monospace; font-size: 1rem; font-weight: 700; line-height: 1.5; }
   @media (max-width: 420px) {
     .community { grid-template-columns: 36px minmax(0, 1fr); gap: 0.75rem; padding: 1rem; }
     .community img { width: 36px; height: 36px; }
     .community p { font-size: 1rem; }
-    footer { gap: 1rem; }
-    .brand { gap: 0.5rem; }
-    .brand img { width: 40px; height: 40px; }
-    .fishystuff { font-size: 1.375rem; }
+    .brandmarks { gap: 0.75rem; }
+    .brand { gap: 0.375rem; }
+    .brand img { width: 36px; height: 36px; }
+    .fishystuff { font-size: 1rem; }
     .maomaoprince { font-size: 0.875rem; }
   }
 </style>

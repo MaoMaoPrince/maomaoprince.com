@@ -18,3 +18,9 @@ Set the Pages custom domain to `maomaoprince.com` before updating DNS. `public/C
 GitHub's setup instructions: https://docs.github.com/en/pages/configuring-a-custom-domain-for-your-github-pages-site/managing-a-custom-domain-for-your-github-pages-site
 
 The old documentation sources remain in the repository for reference but are no longer published as routes.
+
+## Footer artwork and typography
+
+The footer has a small animated blue pixel-water canvas with the surface above the two mascots. It renders at a four-pixel grid and ten frames per second; reduced-motion preferences show a still surface.
+
+The MaoMaoPrince wordmark uses Ready P9 by Scott Lawrence (bleullama), with browser-synthesised bold weight. The unmodified font is licensed under Creative Commons Attribution–ShareAlike 3.0, with its original attribution and license at `public/ReadyP9-LICENSE.txt`. Source: https://fontstruct.com/fontstructions/show/579021/ready_p9. License: https://creativecommons.org/licenses/by-sa/3.0/.
