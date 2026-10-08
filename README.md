@@ -1,11 +1,11 @@
 # Black Desert Fishing migration notice
 
-The site at https://maomaoprince.com points visitors to FishyStuff.
+The site at https://maomaoprince.com points visitors to FishyStuff. The homepage, quest route and fallback notice share the same content: the new home, an explicit Triple Float Fishing Rod quest guide link, and the MaoMaoPrince fishing community Discord invitation from the guide.
 
 | Old address | Destination |
 | --- | --- |
 | `/3x-tfr-quest` or `/3x-tfr-quest/` | https://fishystuff.fish/guides/3x-tfr-quest/ |
-| `/` and unrecognised paths | https://fishystuff.fish/ |
+| `/` and unrecognised paths | https://fishystuff.fish/ and the quest guide above |
 
 The notice uses `src/components/MovedNotice.astro` and the original animated `public/maomaoMunch.gif`. There is no automatic redirect. Unrecognised paths use GitHub Pages' generated `404.html`, with HTTP status 404.
 
