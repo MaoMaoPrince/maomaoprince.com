@@ -16,17 +16,12 @@ const { questPage = false } = Astro.props;
   </head>
   <body>
     <main>
-      {!questPage && <img class="hero-mascot" src="/maomaoMunch.gif" alt="MaoMao munching" width="128" height="128" />}
+      <img class="hero-mascot" src="/maomaoMunch.gif" alt="MaoMao munching" width="128" height="128" />
       <p class="site-name">maomaoprince.com</p>
       {questPage ? (
         <>
           <h1>Looking for the Triple Float Fishing Rod quest?</h1>
-          <p class="guide-intro">Go here for the quest guide:</p>
-          <a href="https://fishystuff.fish/guides/3x-tfr-quest/">https://fishystuff.fish/guides/3x-tfr-quest/</a>
-          <section class="moved-summary" aria-labelledby="moved-heading">
-            <h2 id="moved-heading">Black Desert Fishing has moved to a new home</h2>
-            <a href="https://fishystuff.fish/">https://fishystuff.fish/</a>
-          </section>
+          <a class="quest-destination" href="https://fishystuff.fish/guides/3x-tfr-quest/">https://fishystuff.fish/guides/3x-tfr-quest/</a>
         </>
       ) : (
         <>
@@ -40,7 +35,7 @@ const { questPage = false } = Astro.props;
         </>
       )}
 
-      <aside class="community" aria-label="Join our fishing community">
+      <aside class:list={['community', { compact: questPage }]} aria-label="Join our fishing community">
         <img src="/maomaoCommunity.gif" alt="" width="48" height="48" />
         <p>If you like fishing, nice people and Discord click <a href="https://discord.gg/xRBqjyQ" aria-label="Join the MaoMaoPrince fishing community on Discord">here</a> to join the community.</p>
       </aside>
@@ -88,15 +83,15 @@ const { questPage = false } = Astro.props;
   .quest { margin-top: 2rem; padding-top: 1.75rem; border-top: 1px solid #444; }
   .quest h2 { margin: 0; font-size: clamp(1.125rem, 3vw, 1.375rem); line-height: 1.5; text-wrap: balance; }
   .quest p { margin: 0.5rem 0; color: #d0d0d0; line-height: 1.6; }
-  .guide-intro { margin: 0 0 0.5rem; color: #d0d0d0; line-height: 1.6; }
-  .moved-summary { margin-top: 2rem; }
-  .moved-summary h2 { margin: 0 0 0.5rem; font-size: 1rem; font-weight: 400; line-height: 1.6; color: #c8c8c8; }
-  .moved-summary a { font-size: 1rem; }
+  .quest-destination { font-size: clamp(1.125rem, 3.5vw, 1.5rem); }
   .community { margin-top: 2rem; padding: 1.25rem; display: grid; grid-template-columns: 48px minmax(0, 1fr); align-items: start; gap: 1rem; border-radius: 1rem; background: #222a3b; text-align: left; }
   .community img { margin: 0; }
   .community p { margin: 0; color: #65a8ff; font-size: 1.125rem; line-height: 1.6; }
   .community a { color: #f3f3f3; font-size: inherit; }
   .community a:hover { color: #a6d9f5; }
+  .community.compact { max-width: 34rem; margin: 1.75rem auto 0; padding: 0.625rem 0.875rem; grid-template-columns: 32px minmax(0, 1fr); align-items: center; gap: 0.625rem; border-radius: 0.75rem; }
+  .community.compact img { width: 32px; height: 32px; }
+  .community.compact p { font-size: 0.875rem; line-height: 1.5; }
   footer { display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: 2rem; }
   .brand { display: inline-flex; align-items: center; gap: 0.75rem; color: #f3f3f3; text-decoration: none; }
   .fishystuff { font-family: Pacifico, cursive; font-size: 1.625rem; }
