@@ -1,6 +1,6 @@
 # Black Desert Fishing migration notice
 
-The site at https://maomaoprince.com points visitors to FishyStuff. The homepage, quest route and fallback notice share the same content: the new home, an explicit Triple Float Fishing Rod quest guide link, and the MaoMaoPrince fishing community Discord invitation from the guide.
+The site at https://maomaoprince.com points visitors to FishyStuff. The homepage and fallback show the full migration notice and quest link. The quest route leads with the Triple Float Fishing Rod quest guide, followed by a smaller migration notice. Both layouts include the community Discord invitation and a footer with the original FishyStuff and MaoMaoPrince branding.
 
 | Old address | Destination |
 | --- | --- |

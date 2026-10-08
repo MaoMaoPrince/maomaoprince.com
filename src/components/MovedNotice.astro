@@ -1,33 +1,65 @@
+---
+interface Props {
+  questPage?: boolean;
+}
+
+const { questPage = false } = Astro.props;
+---
+
 <!doctype html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="description" content="Black Desert Fishing has moved to FishyStuff. Visit our new home for fishing guides and resources." />
-    <title>Black Desert Fishing has moved</title>
+    <title>{questPage ? 'Triple Float Fishing Rod quest has moved' : 'Black Desert Fishing has moved'}</title>
   </head>
   <body>
     <main>
-      <img src="/maomaoMunch.gif" alt="MaoMao munching" width="128" height="128" />
+      {!questPage && <img class="hero-mascot" src="/maomaoMunch.gif" alt="MaoMao munching" width="128" height="128" />}
       <p class="site-name">maomaoprince.com</p>
-      <h1>Black Desert Fishing has moved to a new home</h1>
-      <a href="https://fishystuff.fish/">https://fishystuff.fish/</a>
-
-      <section class="quest" aria-labelledby="quest-heading">
-        <h2 id="quest-heading">Looking for the Triple Float Fishing Rod quest?</h2>
-        <p>Go here for the quest guide:</p>
-        <a href="https://fishystuff.fish/guides/3x-tfr-quest/">https://fishystuff.fish/guides/3x-tfr-quest/</a>
-      </section>
+      {questPage ? (
+        <>
+          <h1>Looking for the Triple Float Fishing Rod quest?</h1>
+          <p class="guide-intro">Go here for the quest guide:</p>
+          <a href="https://fishystuff.fish/guides/3x-tfr-quest/">https://fishystuff.fish/guides/3x-tfr-quest/</a>
+          <section class="moved-summary" aria-labelledby="moved-heading">
+            <h2 id="moved-heading">Black Desert Fishing has moved to a new home</h2>
+            <a href="https://fishystuff.fish/">https://fishystuff.fish/</a>
+          </section>
+        </>
+      ) : (
+        <>
+          <h1>Black Desert Fishing has moved to a new home</h1>
+          <a href="https://fishystuff.fish/">https://fishystuff.fish/</a>
+          <section class="quest" aria-labelledby="quest-heading">
+            <h2 id="quest-heading">Looking for the Triple Float Fishing Rod quest?</h2>
+            <p>Go here for the quest guide:</p>
+            <a href="https://fishystuff.fish/guides/3x-tfr-quest/">https://fishystuff.fish/guides/3x-tfr-quest/</a>
+          </section>
+        </>
+      )}
 
       <aside class="community" aria-label="Join our fishing community">
         <img src="/maomaoCommunity.gif" alt="" width="48" height="48" />
         <p>If you like fishing, nice people and Discord click <a href="https://discord.gg/xRBqjyQ" aria-label="Join the MaoMaoPrince fishing community on Discord">here</a> to join the community.</p>
       </aside>
     </main>
+    <footer aria-label="FishyStuff and MaoMaoPrince">
+      <a class="brand fishystuff" href="https://fishystuff.fish/">
+        <span>FishyStuff</span>
+        <img src="/fishystuff-logo.png" alt="" width="56" height="56" />
+      </a>
+      <a class="brand maomaoprince" href="/">
+        <img src="/maomaoprince-logo.svg" alt="" width="56" height="56" />
+        <span>MaoMaoPrince</span>
+      </a>
+    </footer>
   </body>
 </html>
 
 <style is:global>
+  @font-face { font-family: Pacifico; src: url('/Pacifico-Regular.woff2') format('woff2'); font-weight: 400; font-style: normal; font-display: swap; }
   :root {
     color-scheme: dark;
     font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
@@ -40,11 +72,14 @@
     min-height: 100vh;
     min-height: 100svh;
     display: grid;
-    place-items: center;
+    grid-template-rows: 1fr auto;
+    justify-items: center;
+    gap: 3rem;
     padding: 2rem 1.25rem;
   }
-  main { width: 100%; max-width: 46rem; text-align: center; }
-  img { display: block; margin: 0 auto 1.75rem; object-fit: contain; }
+  main { width: 100%; max-width: 46rem; margin: auto 0; text-align: center; }
+  img { display: block; object-fit: contain; }
+  .hero-mascot { margin: 0 auto 1.75rem; }
   .site-name { margin: 0 0 0.75rem; color: #b8b8b8; font-size: 0.9375rem; letter-spacing: 0.04em; }
   h1 { margin: 0 0 1.25rem; font-size: clamp(1.5rem, 4vw, 2rem); font-weight: 600; line-height: 1.4; text-wrap: balance; }
   a { color: #a6d9f5; font-size: clamp(1rem, 2.5vw, 1.125rem); line-height: 1.7; overflow-wrap: anywhere; text-underline-offset: 0.2em; }
@@ -53,14 +88,27 @@
   .quest { margin-top: 2rem; padding-top: 1.75rem; border-top: 1px solid #444; }
   .quest h2 { margin: 0; font-size: clamp(1.125rem, 3vw, 1.375rem); line-height: 1.5; text-wrap: balance; }
   .quest p { margin: 0.5rem 0; color: #d0d0d0; line-height: 1.6; }
+  .guide-intro { margin: 0 0 0.5rem; color: #d0d0d0; line-height: 1.6; }
+  .moved-summary { margin-top: 2rem; }
+  .moved-summary h2 { margin: 0 0 0.5rem; font-size: 1rem; font-weight: 400; line-height: 1.6; color: #c8c8c8; }
+  .moved-summary a { font-size: 1rem; }
   .community { margin-top: 2rem; padding: 1.25rem; display: grid; grid-template-columns: 48px minmax(0, 1fr); align-items: start; gap: 1rem; border-radius: 1rem; background: #222a3b; text-align: left; }
   .community img { margin: 0; }
   .community p { margin: 0; color: #65a8ff; font-size: 1.125rem; line-height: 1.6; }
   .community a { color: #f3f3f3; font-size: inherit; }
   .community a:hover { color: #a6d9f5; }
+  footer { display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: 2rem; }
+  .brand { display: inline-flex; align-items: center; gap: 0.75rem; color: #f3f3f3; text-decoration: none; }
+  .fishystuff { font-family: Pacifico, cursive; font-size: 1.625rem; }
+  .maomaoprince { font-size: 1rem; }
   @media (max-width: 420px) {
     .community { grid-template-columns: 36px minmax(0, 1fr); gap: 0.75rem; padding: 1rem; }
     .community img { width: 36px; height: 36px; }
     .community p { font-size: 1rem; }
+    footer { gap: 1rem; }
+    .brand { gap: 0.5rem; }
+    .brand img { width: 40px; height: 40px; }
+    .fishystuff { font-size: 1.375rem; }
+    .maomaoprince { font-size: 0.875rem; }
   }
 </style>
