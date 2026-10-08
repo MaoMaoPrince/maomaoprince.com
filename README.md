@@ -21,6 +21,29 @@ The old documentation sources remain in the repository for reference but are no 
 
 ## Footer artwork and typography
 
-The footer has a plain animated blue pixel-water canvas with a lowered surface above the two mascots. Both brandmarks bob using the same wave function at their horizontal positions. It renders at a four-pixel grid and ten frames per second, pauses when the footer is offscreen or the tab is hidden, and stays still for reduced-motion preferences. Brand positions are measured on resize, rather than on every frame.
+The footer uses two smooth water canvases: a background and a translucent foreground that covers the arm of MaoMao and approximately the bottom quarter of the FishyStuff mascot while keeping their mouths visible. Broad, smooth waves have a maximum displacement of 13.5px in normal mode and 16px in choppy mode. The mascots follow the same surface function at their horizontal positions, with gentle rocking based on its slope. MaoMao is on the left. Their names bob above their heads in regular weight. The water adds a subdued distant swell, depth shading, and a soft ambient reflection. The water uses antialiased paths with a resolution capped at twice the CSS size and requestAnimationFrame, pauses when the footer is offscreen or the tab is hidden, and stays still for reduced-motion preferences. Mascot positions are measured on resize and after fonts load, rather than on every frame.
 
-All site text uses Ready P9 by Scott Lawrence (bleullama), with browser-synthesised bold weight for headings and footer wordmarks. The unmodified font is licensed under Creative Commons Attribution–ShareAlike 3.0, with its original attribution and license at `public/ReadyP9-LICENSE.txt`. Source: https://fontstruct.com/fontstructions/show/579021/ready_p9. License: https://creativecommons.org/licenses/by-sa/3.0/.
+All site text uses the system sans-serif font, with a prominent bold heading and readable links. No font download is needed for the current design. The heading uses a semibold weight and a wider content area so it fits on one line where space allows. Slightly brighter, irregularly scattered stars decorate the top of a muted night background; there is no moon.
+
+The Discord logo is from Font Awesome Free (Fonticons, Inc.), licensed under CC BY 4.0. Its attribution is included in the SVG, and the license is in public/Discord-icon-LICENSE.txt.
+
+The header places maomaoprince.com at the top left and the Discord invitation at the top right. Desktop layouts use a larger mascot, heading, and destination URLs; the two footer mascots have wider spacing. Narrow layouts keep the header and destinations within the viewport.
+
+The supplied transparent public/maomaoprince.png is used for the floating MaoMao mascot, the small header mark, and the favicon. The homepage destination sits close to the main heading; the quest subsection uses a smaller title with the guide URL directly below it.
+
+Search metadata uses the homepage title Home for Black Desert Fishing, route-specific descriptions, canonical HTTPS addresses, and Open Graph titles. robots.txt allows crawling and references the two-page sitemap.xml. The 404 notice is marked noindex. favicon.png is a square 96px version of the supplied PNG with transparent padding. Search engines decide when to recrawl and how to display the title after publishing.
+
+The hero sits higher on the page to leave open space below it. The floating MaoMao has a resting counterclockwise rotation of 7 degrees, with wave-driven rocking layered on top.
+
+Clicking the water toggles faster, choppier waves, with a gradual blend between modes. The invisible water button supports keyboard activation, exposes its pressed state, and leaves the mascot links clickable. Reduced-motion mode keeps the water still. The wave outline is translucent, and the hero mascot is slightly smaller with more space above the heading.
+
+The original main swell and its harmonic share a travelling phase. Both mascots follow that surface. Choppy mode increases speed to 2.2 times normal and strengthens the crest harmonic.
+
+The background swell follows the same reflected surface with a small phase offset. Footer mascot artwork keeps the same dimensions on mobile and desktop. The sky has 38 softly twinkling stars spread down across the hero area with staggered timing and occasional muted colour shifts. There is no comet. Reduced-motion preferences disable twinkling.
+
+The night sky uses a dark space-like background with two small, faint pink and purple accents. A faint, tiled monochrome grain softens gradient banding without an animation loop. The water darkens toward the bottom. Hovering, focusing, or tapping the gold rod name opens a compact item preview. Escape or clicking outside dismisses it. The item stats and local icon come from https://bdocodex.com/us/item/16153/; the preview links back to that source and requires no third-party script or live request. The white brackets use regular weight and explicit spacing, with the rod name's tracking reset.
+
+
+Contrast check: using conservative bright background bounds of #2a3c50 for sky and link panels and #304e60 for water, white headings are 11.29:1, gold item text 6.38:1, destination links 7.45:1, header site text 6.70:1, Discord text 7.02:1, and footer names 7.14:1. The dimmest tooltip metadata is 6.23:1 against #141923. Headings use weight 500 with the gold item at 700; brackets stay white and regular weight.
+
+An occasional unframed 36px rod icon floats through the water with roughly its lower half submerged, a 38-degree clockwise resting tilt so the rod lies nearly along the surface, surface-driven bobbing, a gentle 2.5px buoyant bob, and an additional 10-degree rocking motion. It shares the water animation loop, appears for 18 seconds every 40 seconds after an initial 6-second delay, and is hidden for reduced motion. The decorative icon cannot intercept clicks.
