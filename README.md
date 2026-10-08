@@ -21,6 +21,6 @@ The old documentation sources remain in the repository for reference but are no 
 
 ## Footer artwork and typography
 
-The footer has a small animated blue pixel-water canvas with the surface above the two mascots. It renders at a four-pixel grid and ten frames per second; reduced-motion preferences show a still surface.
+The footer has a plain animated blue pixel-water canvas with a lowered surface above the two mascots. Both brandmarks bob using the same wave function at their horizontal positions. It renders at a four-pixel grid and ten frames per second, pauses when the footer is offscreen or the tab is hidden, and stays still for reduced-motion preferences. Brand positions are measured on resize, rather than on every frame.
 
-The MaoMaoPrince wordmark uses Ready P9 by Scott Lawrence (bleullama), with browser-synthesised bold weight. The unmodified font is licensed under Creative Commons Attribution–ShareAlike 3.0, with its original attribution and license at `public/ReadyP9-LICENSE.txt`. Source: https://fontstruct.com/fontstructions/show/579021/ready_p9. License: https://creativecommons.org/licenses/by-sa/3.0/.
+All site text uses Ready P9 by Scott Lawrence (bleullama), with browser-synthesised bold weight for headings and footer wordmarks. The unmodified font is licensed under Creative Commons Attribution–ShareAlike 3.0, with its original attribution and license at `public/ReadyP9-LICENSE.txt`. Source: https://fontstruct.com/fontstructions/show/579021/ready_p9. License: https://creativecommons.org/licenses/by-sa/3.0/.

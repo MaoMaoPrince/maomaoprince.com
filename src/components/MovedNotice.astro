@@ -64,8 +64,14 @@ const { questPage = false } = Astro.props;
     const waterCanvas = canvas;
     const waterContext = context;
     const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
-    let frame = 0;
-    let lastPaint = -Infinity;
+    const brands = Array.from(document.querySelectorAll<HTMLElement>('.brand'));
+    let brandPositions: number[] = [];
+    let timer: ReturnType<typeof setInterval> | undefined;
+    let footerVisible = true;
+
+    function wave(x: number, seconds: number) {
+      return Math.sin(x * 0.12 - seconds * 0.9) * 1.3 + Math.sin(x * 0.055 + seconds * 0.6);
+    }
 
     function paint(time: number) {
       const width = waterCanvas.width;
@@ -73,57 +79,58 @@ const { questPage = false } = Astro.props;
       const seconds = time / 1000;
       waterContext.clearRect(0, 0, width, height);
       for (let x = 0; x < width; x++) {
-        const surface = Math.round(4 + Math.sin(x * 0.12 - seconds * 0.9) * 1.3 + Math.sin(x * 0.055 + seconds * 0.6));
+        const surface = Math.round(8 + wave(x, seconds));
         waterContext.fillStyle = '#163b54';
         waterContext.fillRect(x, surface, 1, height - surface);
         waterContext.fillStyle = '#285d7c';
         waterContext.fillRect(x, surface, 1, 2);
         waterContext.fillStyle = '#65c4ef';
         waterContext.fillRect(x, surface, 1, 1);
-        if ((x + Math.floor(seconds * 2)) % 37 < 5) {
-          waterContext.fillStyle = '#3c799b';
-          waterContext.fillRect(x, surface + 5, 1, 1);
-        }
-        if ((x - Math.floor(seconds)) % 53 < 7) {
-          waterContext.fillStyle = '#28536e';
-          waterContext.fillRect(x, Math.round(height * 0.8 + Math.sin(x * 0.05 + seconds)), 1, 1);
-        }
       }
-    }
-
-    function animate(time: number) {
-      if (time - lastPaint >= 100) {
-        paint(time);
-        lastPaint = time;
-      }
-      frame = requestAnimationFrame(animate);
+      brands.forEach((brand, index) => {
+        const offset = reducedMotion.matches ? 0 : Math.round(wave(brandPositions[index] ?? 0, seconds)) * 4;
+        brand.style.transform = `translateY(${offset}px)`;
+      });
     }
 
     function resize() {
       waterCanvas.width = Math.max(1, Math.ceil(waterCanvas.clientWidth / 4));
       waterCanvas.height = Math.max(1, Math.ceil(waterCanvas.clientHeight / 4));
-      paint(0);
+      const waterBounds = waterCanvas.getBoundingClientRect();
+      brandPositions = brands.map(brand => {
+        const bounds = brand.getBoundingClientRect();
+        return (bounds.left + bounds.width / 2 - waterBounds.left) / waterBounds.width * waterCanvas.width;
+      });
+      paint(reducedMotion.matches ? 0 : performance.now());
     }
 
     function updateMotion() {
-      cancelAnimationFrame(frame);
+      clearInterval(timer);
+      timer = undefined;
       if (reducedMotion.matches) paint(0);
-      else frame = requestAnimationFrame(animate);
+      else if (!document.hidden && footerVisible) {
+        paint(performance.now());
+        timer = setInterval(() => paint(performance.now()), 100);
+      }
     }
 
     new ResizeObserver(resize).observe(waterCanvas);
     reducedMotion.addEventListener('change', updateMotion);
+    document.addEventListener('visibilitychange', updateMotion);
+    new IntersectionObserver(entries => {
+      footerVisible = entries[0].isIntersecting;
+      updateMotion();
+    }).observe(waterCanvas);
     resize();
     updateMotion();
   }
 </script>
 
 <style is:global>
-  @font-face { font-family: Pacifico; src: url('/Pacifico-Regular.woff2') format('woff2'); font-weight: 400; font-style: normal; font-display: swap; }
   @font-face { font-family: 'Ready P9'; src: url('/ReadyP9.woff2') format('woff2'); font-weight: 400; font-style: normal; font-display: swap; }
   :root {
     color-scheme: dark;
-    font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    font-family: 'Ready P9', monospace;
     background: #242424;
     color: #f3f3f3;
   }
@@ -162,7 +169,7 @@ const { questPage = false } = Astro.props;
   .pixel-water { position: absolute; inset: 0; width: 100%; height: 100%; z-index: -1; pointer-events: none; image-rendering: pixelated; }
   .brandmarks { display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: 2rem; }
   .brand { display: inline-flex; align-items: center; gap: 0.75rem; color: #f3f3f3; text-decoration: none; }
-  .fishystuff { font-family: Pacifico, cursive; font-size: 1.25rem; }
+  .fishystuff { font-size: 1rem; font-weight: 700; }
   .fishystuff img { width: 44px; height: 44px; }
   .maomaoprince { font-family: 'Ready P9', monospace; font-size: 1rem; font-weight: 700; line-height: 1.5; }
   @media (max-width: 420px) {
