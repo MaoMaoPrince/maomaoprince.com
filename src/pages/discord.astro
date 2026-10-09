@@ -1,0 +1,24 @@
+---
+const invite = 'https://discord.com/invite/xRBqjyQ';
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="robots" content="noindex, follow" />
+    <meta http-equiv="refresh" content={`0; url=${invite}`} />
+    <title>Join the Discord | MaoMaoPrince</title>
+    <script is:inline define:vars={{ invite }}>window.location.replace(invite);</script>
+    <style>
+      :root { color-scheme: dark; font-family: 'Segoe UI', system-ui, sans-serif; background: #0c1320; color: #fff; }
+      body { margin: 0; min-height: 100svh; display: grid; place-content: center; text-align: center; padding: 1rem; }
+      a { color: #a6d9f5; }
+    </style>
+  </head>
+  <body>
+    <p>Taking you to Discord…</p>
+    <a href={invite}>Join the Discord</a>
+  </body>
+</html>

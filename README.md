@@ -7,7 +7,7 @@ The site at https://maomaoprince.com points visitors to FishyStuff. The homepage
 | `/3x-tfr-quest` or `/3x-tfr-quest/` | https://fishystuff.fish/guides/3x-tfr-quest/ |
 | `/` and unrecognised paths | https://fishystuff.fish/ and the quest guide above |
 
-The notice uses `src/components/MovedNotice.astro` and the original animated `public/maomaoMunch.gif`. There is no automatic redirect. Unrecognised paths use GitHub Pages' generated `404.html`, with HTTP status 404.
+The notice uses `src/components/MovedNotice.astro` and the original animated `public/maomaoMunch.gif`. The fishing notice pages do not redirect automatically. `/discord` and `/discord/` redirect immediately to https://discord.com/invite/xRBqjyQ, with a clickable fallback and noindex metadata. The header Discord button uses this vanity route. Unrecognised paths use GitHub Pages' generated `404.html`, with HTTP status 404.
 
 ## Development and publishing
 
