@@ -416,7 +416,7 @@ const stars = Array.from({ length: 38 }, () => ({
   .site-header { width: 100%; padding: clamp(0.875rem, 2vh, 1.5rem) clamp(1rem, 3vw, 2.5rem); display: flex; justify-content: space-between; align-items: center; gap: 1rem; }
   main { width: calc(100% - clamp(2rem, 8vw, 6rem)); max-width: 74rem; margin: 0; align-self: start; padding-top: clamp(0rem, 1vh, 0.75rem); text-align: center; }
   img { display: block; object-fit: contain; }
-  .hero-mascot { width: clamp(72px, calc(48px + 6vw), 160px); height: clamp(72px, calc(48px + 6vw), 160px); margin: 0 auto clamp(0.75rem, 2vh, 1.25rem); }
+  .hero-mascot { width: clamp(144px, calc(128px + 1vw), 160px); height: clamp(144px, calc(128px + 1vw), 160px); margin: 0 auto clamp(0.5rem, 1.5vh, 1rem); }
   .site-name { display: inline-flex; align-items: center; min-height: 2rem; gap: 0.75rem; color: #b9c9de; font-size: 0.9375rem; font-weight: 600; line-height: 1.25; text-decoration: none; }
   .site-name span { transform: translateY(-1px); }
   h1 { margin: 0 auto clamp(1rem, 2vh, 1.5rem); font-size: clamp(1.5rem, calc(1.15rem + 1.25vw), 2.25rem); font-weight: 600; color: #fff; line-height: 1.28; text-wrap: balance; letter-spacing: -0.02em; }
@@ -464,7 +464,7 @@ const stars = Array.from({ length: 38 }, () => ({
   @media (max-height: 650px) {
     .site-header { padding-top: 0.75rem; padding-bottom: 0.75rem; }
     main { padding-top: 0; }
-    .hero-mascot { width: clamp(72px, 8vw, 112px); height: clamp(72px, 8vw, 112px); margin-bottom: 0.75rem; }
+    .hero-mascot { margin-bottom: 0.5rem; }
     footer { height: 8rem; }
   }
   @media (max-width: 420px) {
